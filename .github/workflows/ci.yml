@@ -22,6 +22,6 @@ jobs:
       - name: build
         run: |
           mkdir -p build
-          cmake -S . -B build --parallel
+          cmake -S . -B build
       - name: test
         run: ctest --test-dir build -V
