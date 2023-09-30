@@ -9,7 +9,7 @@ file(GLOB sources src/*.cpp)
 
 # add_library(TaylorFlow SHARED ${sources})
 
-add_executable(TaylorFlow ${sources})
+add_library(TaylorFlow ${sources})
 
 set_target_properties(TaylorFlow PROPERTIES VERSION ${PROJECT_VERSION})
 
@@ -24,3 +24,17 @@ install(
 
 set(CMAKE_CXX_STANDARD 20)
 set_property(TARGET TaylorFlow PROPERTY CXX_STANDARD 20)
+set(CMAKE_CXX_COMPILER "clang++")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
+
+# Catch2
+find_package(Catch2 3 REQUIRED)
+file(GLOB test_sources tests/*.cpp)
+add_executable(tests ${test_sources})
+target_include_directories(tests PRIVATE ./src /opt/homebrew/include)
+target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(tests PRIVATE TaylorFlow)
+
+include(CTest)
+include(Catch)
+catch_discover_tests(tests)

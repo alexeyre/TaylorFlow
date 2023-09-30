@@ -2,9 +2,18 @@
 #include <algorithm>
 #include <stdio.h>
 using namespace std;
-void Interval::print() { printf("[%f, %f]\n", m_lower_bound, m_upper_bound); }
+void Interval::print() { printf("%s", str().c_str()); }
+string Interval::str() {
+  string result;
+  char buf[100];
+  if (m_lower_bound == m_upper_bound)
+    return to_string(m_lower_bound);
+  else
+    return "[" + to_string(m_lower_bound) + ", " + to_string(m_upper_bound) +
+           "]";
+};
 
-Interval Interval::operator*(const Interval &other) {
+Interval Interval::operator*(const Interval &other) const {
   double a = m_lower_bound * other.m_lower_bound;
   double b = m_lower_bound * other.m_upper_bound;
   double c = m_upper_bound * other.m_lower_bound;
@@ -14,7 +23,12 @@ Interval Interval::operator*(const Interval &other) {
   return Interval(lower_bound, upper_bound);
 }
 
-Interval Interval::operator*(const double scalar) {
+Interval::Interval() {
+  m_lower_bound = 0.0;
+  m_upper_bound = 0.0;
+}
+
+Interval Interval::operator*(const double scalar) const {
   double new_lower_bound = scalar * m_lower_bound;
   double new_upper_bound = scalar * m_upper_bound;
   return Interval(new_lower_bound, new_upper_bound);
@@ -48,3 +62,11 @@ void Interval::extendInPlace(t_coef error) {
   m_lower_bound -= error;
   m_upper_bound += error;
 }
+
+Interval Interval::pow(Interval interval, int i) {
+  if (i <= 0) {
+    return MULT_IDENTITY_INTERVAL;
+  }
+  return interval * Interval::pow(interval, i - 1);
+}
+Interval Interval::flip() { return Interval(m_upper_bound, m_lower_bound); }
