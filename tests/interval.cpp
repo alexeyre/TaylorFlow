@@ -1,6 +1,6 @@
 #include "../src/Interval.hpp"
 #include "../src/utility.hpp"
-#include <Catch2/catch_test_macros.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("Test interval multiplication", "[interval]") {
   Interval i1(make_pair(-7.0, 33.0));

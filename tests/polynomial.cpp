@@ -1,6 +1,6 @@
 #include "../src/Polynomial.hpp"
 #include "../src/utility.hpp"
-#include <Catch2/catch_test_macros.hpp>
+#include <catch2/catch_test_macros.hpp>
 #include <utility>
 
 TEST_CASE("Test point-polynomial evaluation at point", "[polynomial]") {
