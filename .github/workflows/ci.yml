@@ -23,5 +23,6 @@ jobs:
         run: |
           mkdir -p build
           cmake -S . -B build
+          make -C build
       - name: test
         run: ctest --test-dir build -V
