@@ -24,11 +24,19 @@ install(
 
 set(CMAKE_CXX_STANDARD 20)
 set_property(TARGET TaylorFlow PROPERTY CXX_STANDARD 20)
-set(CMAKE_CXX_COMPILER "clang++")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++ -lc++abi")
 
 # Catch2
-find_package(Catch2 3 REQUIRED)
+include(FetchContent)
+
+FetchContent_Declare(
+  Catch2
+  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+  GIT_TAG v3.0.1 # or a later release
+)
+
+FetchContent_MakeAvailable(Catch2)
+# find_package(Catch2 3 REQUIRED)
 file(GLOB test_sources tests/*.cpp)
 add_executable(tests ${test_sources})
 target_include_directories(tests PRIVATE ./src /opt/homebrew/include)
