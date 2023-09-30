@@ -1,38 +1,38 @@
 #ifndef POLYNOMIAL_H_
 #define POLYNOMIAL_H_
 
-#include "Types.h"
+#include "Interval.hpp"
+#include <cstddef>
+#include <initializer_list>
+#include <string>
+#include <utility>
 #include <vector>
+
 using namespace std;
 
 class Polynomial {
 public:
-  Polynomial();
+  Polynomial(vector<double> coeffs);
+  Polynomial(vector<Interval> coeffs) : m_coefficients(std::move(coeffs)){};
+  Polynomial(vector<pair<double, double>> coeffs);
 
-  Polynomial(vector<t_coef> &&coefficients)
-      : m_coefficients(std::move(coefficients)){};
+  Interval evaluate(double point);
+  Interval evaluate(Interval interval);
+  Interval evaluate(pair<double, double> interval);
+
+  size_t degree() { return m_coefficients.size(); }
+  Interval coef(size_t i) { return m_coefficients[i]; }
 
   void print();
+  string sprint();
 
-  double evaluate(double point);
-
-  Polynomial operator+(const Polynomial &other);
-  void operator+=(const Polynomial &other);
-  Polynomial operator*(const Polynomial &other);
-  void operator*=(const Polynomial &other);
-
-  // creates a new polynomial multiplied by the scalar
-  Polynomial operator*(const t_coef scalar);
-  void operator*=(const t_coef scalar);
-
-  Polynomial lower(const size_t order);
-  bool lowerInPlace(const size_t order);
-
-  t_coef coef(const size_t order) { return m_coefficients[order]; }
-  size_t degree() const { return m_coefficients.size(); }
+  Polynomial integrate(size_t n) const;
+  Polynomial integrate() const { return integrate(1); }
+  void integrate_inplace(size_t n);
+  void integrate_inplace() { integrate_inplace(1); }
 
 private:
-  vector<t_coef> m_coefficients;
+  vector<Interval> m_coefficients;
 };
 
 #endif // POLYNOMIAL_H_

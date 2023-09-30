@@ -7,27 +7,13 @@
 using namespace std;
 
 class Model {
-
 public:
-  Model();
-  Model(Polynomial &&polynomial, Interval &&interval)
-      : m_polynomial(std::move(polynomial)), m_interval(std::move(interval)){};
-  Model(Interval &&interval, Polynomial &&polynomial)
-      : m_polynomial(std::move(polynomial)), m_interval(std::move(interval)){};
-
-  Model operator+(const Model &other);
-  void operator+=(const Model &other);
-  Model operator*(const Model &other);
-  void operator*=(const Model &other);
-  Model operator*(const t_coef scalar);
-  void operator*=(const t_coef scalar);
-  void print();
-
-  Model lower(const size_t order);
+  Model(Polynomial polynomial, Interval error)
+      : m_polynomial(std::move(polynomial)), m_error(std::move(error)){};
 
 private:
   Polynomial m_polynomial;
-  Interval m_interval;
+  Interval m_error;
 };
 
 #endif // TAYLORMODEL_H_
