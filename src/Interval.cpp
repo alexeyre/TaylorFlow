@@ -4,8 +4,6 @@
 using namespace std;
 void Interval::print() const { printf("%s", str().c_str()); }
 string Interval::str() const {
-  string result;
-  char buf[100];
   if (m_lower_bound == m_upper_bound)
     return to_string(m_lower_bound);
   else

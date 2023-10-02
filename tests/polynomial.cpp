@@ -91,9 +91,9 @@ TEST_CASE("Test polynomial twice-integretion", "[polynomial]") {
 }
 
 TEST_CASE("Test point polynomial composition", "[polynomial]") {
-  Polynomial p(vector<Interval>{1.0, 0.0, 1.0});
-  Polynomial g(vector<Interval>{1.0, 0.0, 1.0});
-  Polynomial expected(vector<Interval>{2, 0, 2, 0, 1});
+  Polynomial p(vector<double>{1.0, 0.0, 1.0});
+  Polynomial g(vector<double>{1.0, 0.0, 1.0});
+  Polynomial expected(vector<double>{2, 0, 2, 0, 1});
   Polynomial comp = g.compose(p);
   REQUIRE(peq(comp, expected));
 }

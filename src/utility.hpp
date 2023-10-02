@@ -7,7 +7,7 @@
 #define EPSILON 0.0001
 
 bool deq(double a, double b);
-bool ieq(Interval a, Interval b);
-bool peq(Polynomial a, Polynomial b);
+bool ieq(const Interval &a, const Interval &b);
+bool peq(const Polynomial &a, const Polynomial &b);
 
 #endif // UTILITY_H_

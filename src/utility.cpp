@@ -3,11 +3,11 @@
 #include "Polynomial.hpp"
 bool deq(double a, double b) { return std::abs(a - b) < EPSILON; }
 
-bool ieq(Interval a, Interval b) {
+bool ieq(const Interval &a, const Interval &b) {
   return deq(a.lower(), b.lower()) && deq(a.upper(), b.upper());
 }
 
-bool peq(Polynomial a, Polynomial b) {
+bool peq(const Polynomial &a, const Polynomial &b) {
   if (a.degree() != b.degree()) {
     return false;
   }
