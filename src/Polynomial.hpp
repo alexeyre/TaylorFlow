@@ -2,8 +2,6 @@
 #define POLYNOMIAL_H_
 
 #include "Interval.hpp"
-#include <cstddef>
-#include <initializer_list>
 #include <string>
 #include <utility>
 #include <vector>
@@ -12,10 +10,11 @@ using namespace std;
 
 class Polynomial {
 public:
-  Polynomial(){};
-  Polynomial(vector<double> coeffs);
-  Polynomial(vector<Interval> coeffs) : m_coefficients(std::move(coeffs)){};
-  Polynomial(vector<pair<double, double>> coeffs);
+  explicit Polynomial(){};
+  explicit Polynomial(const vector<double> &coeffs);
+  explicit Polynomial(const vector<Interval> &coeffs)
+      : m_coefficients(std::move(coeffs)){};
+  explicit Polynomial(const vector<pair<double, double>> &coeffs);
 
   Interval evaluate(double point);
   Interval evaluate(Interval interval);
@@ -35,7 +34,7 @@ public:
   void truncate_inplace(const size_t degree);
   Polynomial truncate(const size_t degree) const;
 
-  Polynomial compose(const Polynomial other) const;
+  Polynomial compose(const Polynomial &other) const;
   Polynomial pow(const int i) const;
 
   void operator+=(const Polynomial &other);

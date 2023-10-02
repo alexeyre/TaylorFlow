@@ -22,7 +22,7 @@ Polynomial picard_iteration(Polynomial p_F, Interval x_0, int n,
 }
 
 TEST_CASE("Test picard iteration for TMFC paper example", "[picard]") {
-  Polynomial p_F(vector<Interval>{{1, 0, 1}});
+  Polynomial p_F(vector<double>{1.0, 0.0, 1.0});
   Polynomial p_F_picard = picard_iteration(p_F, Interval(0), 3);
   Polynomial p_F_picard_expected(Polynomial(vector<Interval>{}));
 }

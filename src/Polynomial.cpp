@@ -1,8 +1,10 @@
 #include "Polynomial.hpp"
 #include "Interval.hpp"
 #include "utility.hpp"
+#include <algorithm>
 #include <cstdio>
 #include <iostream>
+#include <iterator>
 #include <string>
 #include <utility>
 using namespace std;
@@ -38,18 +40,17 @@ Interval Polynomial::evaluate(pair<double, double> interval) {
   return evaluate(Interval(interval.first, interval.second));
 }
 
-Polynomial::Polynomial(vector<double> coeffs) {
+Polynomial::Polynomial(const vector<double> &coeffs) {
   std::vector<Interval> intervals;
-  for (double coef : coeffs) {
-    intervals.push_back(Interval(coef, coef));
-  }
+  transform(coeffs.cbegin(), coeffs.cend(), back_inserter(intervals),
+            [](double c) { return Interval(c); });
   m_coefficients = std::move(intervals);
 }
 
-Polynomial::Polynomial(vector<pair<double, double>> coeffs) {
+Polynomial::Polynomial(const vector<pair<double, double>> &coeffs) {
   std::vector<Interval> intervals;
-  for (pair<double, double> coef : coeffs) {
-    intervals.push_back(Interval(coef.first, coef.second));
+  for (pair<double, double> c : coeffs) {
+    intervals.push_back(Interval(c.first, c.second));
   }
   m_coefficients = std::move(intervals);
 }
@@ -57,11 +58,10 @@ Polynomial::Polynomial(vector<pair<double, double>> coeffs) {
 void Polynomial::print() const { cout << sprint() << endl; }
 
 string Polynomial::sprint() const {
-  size_t degree = m_coefficients.size();
-  if (degree == 0)
+  if (degree() == 0)
     return "";
   string result = m_coefficients[0].str();
-  for (size_t i = 1; i < degree; i++) {
+  for (size_t i = 1; i < degree(); i++) {
     result += " + " + m_coefficients[i].str() + " x^" + to_string(i);
   }
   return result;
@@ -85,9 +85,8 @@ void Polynomial::integrate_inplace(size_t n) {
   }
 }
 
-Polynomial Polynomial::compose(const Polynomial other) const {
+Polynomial Polynomial::compose(const Polynomial &other) const {
   // putting the other polynomial inside the current polynomial
-  vector<Interval> coefficients(degree() + other.degree() - 1);
   Polynomial result;
   for (size_t i = 0; i < degree(); i++) {
     // take the substituting polynomial to the correct power

@@ -11,9 +11,9 @@
 using namespace std;
 class Interval {
 public:
-  Interval(double lower_bound, double upper_bound)
+  explicit Interval(double lower_bound, double upper_bound)
       : m_lower_bound(lower_bound), m_upper_bound(upper_bound){};
-  Interval(pair<double, double> interval)
+  explicit Interval(pair<double, double> interval)
       : m_lower_bound(interval.first), m_upper_bound(interval.second){};
   Interval(double single_bound)
       : m_lower_bound(single_bound), m_upper_bound(single_bound){};
@@ -42,8 +42,8 @@ public:
   Interval extend(t_coef error) const;
   void extendInPlace(t_coef error);
 
-  const double lower() { return m_lower_bound; }
-  const double upper() { return m_upper_bound; }
+  const double lower() const { return m_lower_bound; }
+  const double upper() const { return m_upper_bound; }
 
   Interval flip();
 
