@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <stdio.h>
 using namespace std;
-void Interval::print() { printf("%s", str().c_str()); }
-string Interval::str() {
+void Interval::print() const { printf("%s", str().c_str()); }
+string Interval::str() const {
   string result;
   char buf[100];
   if (m_lower_bound == m_upper_bound)
@@ -53,6 +53,11 @@ void Interval::operator*=(const Interval &other) {
 void Interval::operator+=(const Interval &other) {
   m_lower_bound += other.m_lower_bound;
   m_upper_bound += other.m_upper_bound;
+}
+
+void Interval::operator-=(const Interval &other) {
+  m_lower_bound -= other.m_lower_bound;
+  m_upper_bound -= other.m_upper_bound;
 }
 
 Interval Interval::extend(t_coef error) const {

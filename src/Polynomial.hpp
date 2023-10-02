@@ -12,6 +12,7 @@ using namespace std;
 
 class Polynomial {
 public:
+  Polynomial(){};
   Polynomial(vector<double> coeffs);
   Polynomial(vector<Interval> coeffs) : m_coefficients(std::move(coeffs)){};
   Polynomial(vector<pair<double, double>> coeffs);
@@ -20,16 +21,35 @@ public:
   Interval evaluate(Interval interval);
   Interval evaluate(pair<double, double> interval);
 
-  size_t degree() { return m_coefficients.size(); }
-  Interval coef(size_t i) { return m_coefficients[i]; }
+  size_t degree() const { return m_coefficients.size(); }
+  Interval coef(size_t i) const { return m_coefficients[i]; }
 
-  void print();
-  string sprint();
+  void print() const;
+  string sprint() const;
 
   Polynomial integrate(size_t n) const;
   Polynomial integrate() const { return integrate(1); }
   void integrate_inplace(size_t n);
   void integrate_inplace() { integrate_inplace(1); }
+
+  void truncate_inplace(const size_t degree);
+  Polynomial truncate(const size_t degree) const;
+
+  Polynomial compose(const Polynomial other) const;
+  Polynomial pow(const int i) const;
+
+  void operator+=(const Polynomial &other);
+  void operator*=(const Polynomial &other);
+  void operator*=(const Interval &scalar);
+  void operator-=(const Polynomial &other);
+  Polynomial operator+(const Polynomial &rhs) const {
+    Polynomial result(*this);
+    result += rhs;
+    return result;
+  }
+  Polynomial operator*(const Polynomial &rhs) const;
+
+  Polynomial picard(Polynomial g_i) const;
 
 private:
   vector<Interval> m_coefficients;

@@ -1,5 +1,6 @@
 #include "Polynomial.hpp"
 #include "Interval.hpp"
+#include "utility.hpp"
 #include <cstdio>
 #include <iostream>
 #include <string>
@@ -53,9 +54,9 @@ Polynomial::Polynomial(vector<pair<double, double>> coeffs) {
   m_coefficients = std::move(intervals);
 }
 
-void Polynomial::print() { cout << sprint() << endl; }
+void Polynomial::print() const { cout << sprint() << endl; }
 
-string Polynomial::sprint() {
+string Polynomial::sprint() const {
   size_t degree = m_coefficients.size();
   if (degree == 0)
     return "";
@@ -82,4 +83,79 @@ void Polynomial::integrate_inplace(size_t n) {
   for (size_t i = n; i < m_coefficients.size(); i++) {
     m_coefficients[i] *= (1.0) / i;
   }
+}
+
+Polynomial Polynomial::compose(const Polynomial other) const {
+  // putting the other polynomial inside the current polynomial
+  vector<Interval> coefficients(degree() + other.degree() - 1);
+  Polynomial result;
+  for (size_t i = 0; i < degree(); i++) {
+    // take the substituting polynomial to the correct power
+    Polynomial subst = other.pow(i);
+    subst *= this->coef(i);
+    result += subst;
+  }
+  return result;
+}
+
+Polynomial Polynomial::pow(const int i) const {
+  if (i == 0) {
+    return Polynomial({Interval(1)});
+  }
+  if (i == 1) {
+    return *this;
+  }
+  return *this * pow(i - 1);
+}
+
+void Polynomial::operator*=(const Interval &scalar) {
+  for (size_t i = 0; i < this->degree(); i++) {
+    m_coefficients[i] *= scalar;
+  }
+}
+
+Polynomial Polynomial::operator*(const Polynomial &rhs) const {
+  vector<Interval> product_coefs(this->degree() + rhs.degree() - 1,
+                                 Interval(0));
+  for (size_t i = 0; i < this->degree(); i++) {
+    for (size_t j = 0; j < rhs.degree(); j++) {
+      product_coefs[i + j] += this->coef(i) * rhs.coef(j);
+    }
+  }
+  return Polynomial(product_coefs);
+}
+
+void Polynomial::operator+=(const Polynomial &other) {
+  if (other.degree() > degree()) {
+    m_coefficients.resize(other.degree());
+  }
+  for (size_t i = 0; i < other.degree(); i++) {
+    m_coefficients[i] += other.coef(i);
+  }
+}
+void Polynomial::operator-=(const Polynomial &other) {
+  if (other.degree() > degree()) {
+    m_coefficients.resize(other.degree());
+  }
+  for (size_t i = 0; i < other.degree(); i++) {
+    m_coefficients[i] -= other.coef(i);
+  }
+}
+void Polynomial::operator*=(const Polynomial &other) {
+  vector<Interval> coefficients(degree() + other.degree() - 1);
+  for (size_t i = 0; i < degree(); i++) {
+    for (size_t j = 0; j < other.degree(); j++) {
+      coefficients[i + j] += m_coefficients[i] * other.coef(j);
+    }
+  }
+  m_coefficients = coefficients;
+}
+
+void Polynomial::truncate_inplace(const size_t degree) {
+  m_coefficients.resize(degree + 1);
+}
+Polynomial Polynomial::truncate(const size_t degree) const {
+  Polynomial result(*this);
+  result.truncate_inplace(degree + 1);
+  return result;
 }

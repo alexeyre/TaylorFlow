@@ -15,12 +15,18 @@ public:
       : m_lower_bound(lower_bound), m_upper_bound(upper_bound){};
   Interval(pair<double, double> interval)
       : m_lower_bound(interval.first), m_upper_bound(interval.second){};
+  Interval(double single_bound)
+      : m_lower_bound(single_bound), m_upper_bound(single_bound){};
   Interval();
 
-  Interval operator+(const Interval &other) {
+  Interval operator+(const Interval &other) const {
     return Interval(m_lower_bound + other.m_lower_bound,
                     m_upper_bound + other.m_upper_bound);
   };
+  Interval operator-(const Interval &other) const {
+    return Interval(m_lower_bound - other.m_lower_bound,
+                    m_upper_bound - other.m_upper_bound);
+  }
 
   Interval operator*(const Interval &other) const;
   Interval operator*(const double scalar) const;
@@ -31,6 +37,7 @@ public:
   void operator*=(const double scalar);
   void operator*=(const Interval &other);
   void operator+=(const Interval &other);
+  void operator-=(const Interval &other);
 
   Interval extend(t_coef error) const;
   void extendInPlace(t_coef error);
@@ -43,8 +50,8 @@ public:
   static Interval pow(Interval interval, int i);
   static Interval identity;
 
-  void print();
-  string str();
+  void print() const;
+  string str() const;
 
 private:
   double m_lower_bound, m_upper_bound;
