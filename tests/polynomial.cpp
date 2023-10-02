@@ -37,18 +37,6 @@ TEST_CASE("Test interval-polynomial evaluation on interval", "[polynomial]") {
   REQUIRE(deq(result.upper(), 1682232.0));
 }
 
-// TEST_CASE("Test polynomial printing", "[polynomial]") {
-//   Polynomial p({{-1.0, 2.0}, {0.0, 3.0}, {6.0, 10.0}});
-//   REQUIRE(p.sprint() == "[-1.000000, 2.000000] + [0.000000, 3.000000] x^1 + "
-//                         "[6.000000, 10.000000] x^2");
-
-//   Polynomial empty_p;
-//   REQUIRE(empty_p.sprint() == "");
-
-//   Polynomial singleton_p({{-1.0, 7.0}});
-//   REQUIRE(singleton_p.sprint() == "[-1.00000, 7.00000]");
-// }
-
 TEST_CASE("Test polynomial once-integration inplace", "[polynomial]") {
   vector<pair<double, double>> p_coefs = {
       {-1.0, -1.0}, {7.0, 7.0}, {10.0, 10.0}};

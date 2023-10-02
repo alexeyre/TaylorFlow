@@ -7,17 +7,20 @@
 #include <string>
 #include <utility>
 
-#define MULT_IDENTITY_INTERVAL Interval(std::make_pair(1.0, 1.0))
+#define R_interval Interval(-INFINITY, INFINITY)
+
 using namespace std;
 class Interval {
 public:
+  Interval(double single_bound) {
+    this->m_lower_bound = single_bound;
+    this->m_upper_bound = single_bound;
+  };
   explicit Interval(double lower_bound, double upper_bound)
       : m_lower_bound(lower_bound), m_upper_bound(upper_bound){};
   explicit Interval(pair<double, double> interval)
       : m_lower_bound(interval.first), m_upper_bound(interval.second){};
-  Interval(double single_bound)
-      : m_lower_bound(single_bound), m_upper_bound(single_bound){};
-  Interval();
+  explicit Interval();
 
   Interval operator+(const Interval &other) const {
     return Interval(m_lower_bound + other.m_lower_bound,

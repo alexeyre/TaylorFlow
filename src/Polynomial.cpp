@@ -49,9 +49,8 @@ Polynomial::Polynomial(const vector<double> &coeffs) {
 
 Polynomial::Polynomial(const vector<pair<double, double>> &coeffs) {
   std::vector<Interval> intervals;
-  for (pair<double, double> c : coeffs) {
-    intervals.push_back(Interval(c.first, c.second));
-  }
+  transform(coeffs.cbegin(), coeffs.cend(), back_inserter(intervals),
+            [](pair<double, double> c) { return Interval(c.first, c.second); });
   m_coefficients = std::move(intervals);
 }
 

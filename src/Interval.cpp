@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <stdio.h>
 using namespace std;
+
+#define MULT_IDENTITY_INTERVAL Interval(1.0)
+
 void Interval::print() const { printf("%s", str().c_str()); }
 string Interval::str() const {
   if (m_lower_bound == m_upper_bound)
