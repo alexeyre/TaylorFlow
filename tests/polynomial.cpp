@@ -4,7 +4,8 @@
 #include <utility>
 
 TEST_CASE("Test point-polynomial evaluation at point", "[polynomial]") {
-  Polynomial p({1.0, 2.0, 3.0});
+  vector<Interval> p_coefs = {1.0, 2.0, 3.0};
+  Polynomial p(p_coefs);
   Interval result = p.evaluate(2.0);
   REQUIRE(result.lower() == result.upper());
   REQUIRE(deq(result.lower(), 17.0));
@@ -87,4 +88,12 @@ TEST_CASE("Test polynomial twice-integretion", "[polynomial]") {
 
   Polynomial p_int = Polynomial(p_coefs).integrate(2);
   REQUIRE(peq(p_int, Polynomial(p_tint_coefs)));
+}
+
+TEST_CASE("Test point polynomial composition", "[polynomial]") {
+  Polynomial p(vector<Interval>{1.0, 0.0, 1.0});
+  Polynomial g(vector<Interval>{1.0, 0.0, 1.0});
+  Polynomial expected(vector<Interval>{2, 0, 2, 0, 1});
+  Polynomial comp = g.compose(p);
+  REQUIRE(peq(comp, expected));
 }

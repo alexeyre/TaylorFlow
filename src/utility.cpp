@@ -9,7 +9,6 @@ bool ieq(Interval a, Interval b) {
 
 bool peq(Polynomial a, Polynomial b) {
   if (a.degree() != b.degree()) {
-    printf("degrees not equal!");
     return false;
   }
   for (size_t i = 0; i < a.degree(); i++) {
