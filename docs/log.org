@@ -1,0 +1,19 @@
+#+title: Log
+
+* Week 1
+- Set up basic classes
+  - ~Model~ representing a TaylorModel $(p, I)$
+  - ~Interval~ representing an interval
+  - ~Polynomial~ representing a polynomial
+- Implemented addition and multiplication for
+  - Intervals and literals
+  - Intervals and intervals
+  - Polynomials and literals
+  - Polynomials and polynomials
+  - Models and Models
+  - Models and literals
+- Decided on notation for in-place vs copying operations, ~x * 3.0~ does a copy
+  operation by default, ~x *= 3.0~ does in-place.
+* Week 2
+- Converted ~Polynomial~ to use ~Interval~ classes as coefficients
+- Added ~integrate~ and ~integrate_inplace~ functions to ~Polynomial~
