@@ -17,3 +17,8 @@
 * Week 2
 - Converted ~Polynomial~ to use ~Interval~ classes as coefficients
 - Added ~integrate~ and ~integrate_inplace~ functions to ~Polynomial~
+* Week 3
+- Implemented toy Picard iteration example
+- Started thinking about optimisation
+- Added compose function and utilities to Polynomial
+- Implement test bench using Catch2
