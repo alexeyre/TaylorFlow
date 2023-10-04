@@ -1,0 +1,4 @@
+Library for efficient computation of Taylor-model Flowpipes.
+
+
+[[./docs/log.org]]
