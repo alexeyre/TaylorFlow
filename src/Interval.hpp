@@ -48,7 +48,7 @@ public:
   const double lower() const { return m_lower_bound; }
   const double upper() const { return m_upper_bound; }
 
-  Interval flip();
+  Interval flip() const;
 
   static Interval pow(Interval interval, int i);
   static Interval identity;

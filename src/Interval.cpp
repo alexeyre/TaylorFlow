@@ -75,4 +75,6 @@ Interval Interval::pow(Interval interval, int i) {
   }
   return interval * Interval::pow(interval, i - 1);
 }
-Interval Interval::flip() { return Interval(m_upper_bound, m_lower_bound); }
+Interval Interval::flip() const {
+  return Interval(m_upper_bound, m_lower_bound);
+}

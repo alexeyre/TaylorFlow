@@ -16,9 +16,9 @@ public:
       : m_coefficients(std::move(coeffs)){};
   explicit Polynomial(const vector<pair<double, double>> &coeffs);
 
-  Interval evaluate(double point);
-  Interval evaluate(Interval interval);
-  Interval evaluate(pair<double, double> interval);
+  Interval evaluate(double point) const;
+  Interval evaluate(Interval interval) const;
+  Interval evaluate(pair<double, double> interval) const;
 
   size_t degree() const { return m_coefficients.size(); }
   Interval coef(size_t i) const { return m_coefficients[i]; }

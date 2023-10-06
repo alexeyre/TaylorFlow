@@ -9,7 +9,7 @@
 #include <utility>
 using namespace std;
 
-Interval Polynomial::evaluate(double point) {
+Interval Polynomial::evaluate(double point) const {
   Interval acc(0.0, 0.0);
   if (point >= 0) {
     for (size_t i = 0; i < m_coefficients.size(); i++) {
@@ -26,7 +26,7 @@ Interval Polynomial::evaluate(double point) {
   return acc;
 }
 
-Interval Polynomial::evaluate(Interval interval) {
+Interval Polynomial::evaluate(Interval interval) const {
   Interval acc(0.0, 0.0);
   for (size_t i = 0; i < m_coefficients.size(); i++) {
     auto interval_to_power = Interval::pow(interval, i);
@@ -36,7 +36,7 @@ Interval Polynomial::evaluate(Interval interval) {
   return acc;
 }
 
-Interval Polynomial::evaluate(pair<double, double> interval) {
+Interval Polynomial::evaluate(pair<double, double> interval) const {
   return evaluate(Interval(interval.first, interval.second));
 }
 
