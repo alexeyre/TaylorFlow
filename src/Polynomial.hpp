@@ -46,6 +46,11 @@ public:
     result += rhs;
     return result;
   }
+  Polynomial operator-(const Polynomial &rhs) const {
+    Polynomial result(*this);
+    result -= rhs;
+    return result;
+  }
   Polynomial operator*(const Polynomial &rhs) const;
 
   Polynomial picard(Polynomial g_i) const;

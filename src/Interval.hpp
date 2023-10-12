@@ -7,8 +7,6 @@
 #include <string>
 #include <utility>
 
-#define R_interval Interval(-INFINITY, INFINITY)
-
 using namespace std;
 class Interval {
 public:
@@ -51,7 +49,6 @@ public:
   Interval flip() const;
 
   static Interval pow(Interval interval, int i);
-  static Interval identity;
 
   void print() const;
   string str() const;
